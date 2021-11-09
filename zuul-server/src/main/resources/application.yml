@@ -1,0 +1,26 @@
+server:
+  port: 8090
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  application:
+    name: ApiGateway
+  cloud.gateway:
+    discovery:
+      locator:
+        enabled: true
+        lowerCaseServiceId: true
+    routes:
+    - id: products
+      uri: lb://SERVICIO-PRODUCTOS
+      predicates:
+        - Path=/product/**
+    - id: items
+      uri: lb://SERVICIO-ITEMS
+      predicates:
+        - Path=/item/**
